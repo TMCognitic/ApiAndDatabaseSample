@@ -1,0 +1,24 @@
+name: "api_and_db_sample"
+services:
+  mssql:
+      container_name: mssql
+      hostname: mssql
+      build:
+        context: .
+        dockerfile: MsSql/Dockerfile
+      ports: 
+        - 1433:1433
+  api:
+    container_name: api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_HTTP_PORTS: 8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    image: ${DOCKER_REGISTRY-}microservapi
+    build:
+      context: .
+      dockerfile: ApiAndDatabaseSample.Api/Dockerfile

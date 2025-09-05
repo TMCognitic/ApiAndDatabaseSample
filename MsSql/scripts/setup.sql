@@ -1,0 +1,17 @@
+CREATE DATABASE Demo;
+GO
+
+USE DEMO;
+GO
+
+CREATE TABLE Todo
+(
+    Id INT NOT NULL IDENTITY,
+    Title NVARCHAR(255) NOT NULL,
+    Done BIT NOT NULL
+        CONSTRAINT DF_Todo_Done DEFAULT (0),
+    CONSTRAINT PK_Todo PRIMARY KEY (Id),
+    CONSTRAINT UK_Todo_Title UNIQUE (Title)
+);
+
+INSERT INTO Todo (Title) VALUES (N'Test1'), (N'Test2'), (N'Test3'), (N'Test4');
